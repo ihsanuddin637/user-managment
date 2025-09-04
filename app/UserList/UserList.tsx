@@ -17,26 +17,22 @@ export default function UserList() {
   const [page, setPage] = useState(1);
   const limit = 5;
 
-  // Fetch users from API
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
       .then((data: User[]) => setUsers(data));
   }, []);
 
-  // Reset page when search changes
   useEffect(() => {
     setPage(1);
   }, [search]);
 
-  // Filter users by name or email
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(search.toLowerCase()) ||
       u.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Pagination logic
   const start = (page - 1) * limit;
   const paginatedUsers = filteredUsers.slice(start, start + limit);
 
@@ -45,16 +41,14 @@ export default function UserList() {
       <div className="w-11/12 mx-auto bg-white shadow-xl rounded-2xl p-6">
         <h1 className="text-2xl font-bold mb-4">User Management</h1>
 
-        {/* Search */}
         <input
           type="text"
           placeholder="Search by name or email"
-          className="w-full border rounded-lg px-4 py-2 mb-4"
+          className="w-full border rounded-lg px-4 py-2 mb-5"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        {/* User Table */}
         <div className="overflow-x-auto w-full">
           <table className="table w-full table-auto border-collapse">
             <thead className="bg-gray-100">
@@ -73,7 +67,6 @@ export default function UserList() {
           </table>
         </div>
 
-        {/* Pagination */}
         <div className="flex justify-between mt-4">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
